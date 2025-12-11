@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -61,7 +62,11 @@ fun BookListScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        items(currentState.books) { book ->
+                        items(
+                            count = currentState.books.size,
+                            key = { index -> currentState.books[index].id }
+                        ) { index ->
+                            val book = currentState.books[index]
                             BookListItem(
                                 book = book,
                                 onClick = { onBookClick(book.id) }
