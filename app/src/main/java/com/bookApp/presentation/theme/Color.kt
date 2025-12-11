@@ -1,4 +1,4 @@
-package com.bookApp.ui.theme
+package com.bookApp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

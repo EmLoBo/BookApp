@@ -3,6 +3,7 @@ package com.bookApp.data.repository
 import com.bookApp.data.mapper.toBook
 import com.bookApp.data.remote.GutendexApi
 import com.bookApp.domain.model.Book
+import com.bookApp.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

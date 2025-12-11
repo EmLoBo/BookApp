@@ -1,4 +1,4 @@
-package com.bookApp.data.repository
+package com.bookApp.domain.repository
 
 import com.bookApp.domain.model.Book
 import kotlinx.coroutines.flow.Flow
