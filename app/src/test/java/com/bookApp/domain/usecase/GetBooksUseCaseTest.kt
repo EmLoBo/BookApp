@@ -10,17 +10,12 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class GetBooksUseCaseTest {
     private lateinit var repository: BookRepository
     private lateinit var useCase: GetBooksUseCase
 
     @Before
-    fun setUp(){
+    fun setUp() {
         repository = mockk()
         useCase = GetBooksUseCase(repository)
     }
@@ -28,14 +23,12 @@ class GetBooksUseCaseTest {
 
     @Test
     fun `invoke returns failure when repository fails`() = runTest {
-        // Given
+
         val exception = Exception("Network error")
         coEvery { repository.getBooks() } returns flowOf(Result.failure(exception))
 
-        // When
         val result = useCase().first()
 
-        // Then
         Assert.assertTrue(result.isFailure)
         Assert.assertEquals("Network error", result.exceptionOrNull()?.message)
     }

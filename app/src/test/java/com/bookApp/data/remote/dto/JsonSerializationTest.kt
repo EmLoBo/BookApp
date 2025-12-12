@@ -5,8 +5,8 @@ import org.junit.Assert
 import org.junit.Test
 
 class JsonSerializationTest {
-
     private val gson = Gson()
+
     @Test
     fun `test AuthorDto with null birth and death years`() {
         val jsonWithNullYears = """
@@ -31,10 +31,4 @@ class JsonSerializationTest {
             Assert.fail("Failed to deserialize AuthorDto with null years: ${e.message}")
         }
     }
-
-
-
-
-
-
 }
