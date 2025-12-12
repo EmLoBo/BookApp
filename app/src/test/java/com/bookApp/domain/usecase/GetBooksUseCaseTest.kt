@@ -1,16 +1,14 @@
-package com.bookApp
+package com.bookApp.domain.usecase
 
 import com.bookApp.domain.repository.BookRepository
-import com.bookApp.domain.usecase.GetBooksUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert
 import org.junit.Before
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -38,7 +36,7 @@ class GetBooksUseCaseTest {
         val result = useCase().first()
 
         // Then
-        assertTrue(result.isFailure)
-        assertEquals("Network error", result.exceptionOrNull()?.message)
+        Assert.assertTrue(result.isFailure)
+        Assert.assertEquals("Network error", result.exceptionOrNull()?.message)
     }
 }
