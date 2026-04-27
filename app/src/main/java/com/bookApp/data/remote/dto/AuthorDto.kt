@@ -1,12 +1,14 @@
 package com.bookApp.data.remote.dto
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class AuthorDto (
+@Serializable
+data class AuthorDto(
     val name: String,
-    @SerializedName("birth_year")
+    @SerialName("birth_year")
     val birthYear: Int?,
-    @SerializedName("death_year")
+    @SerialName("death_year")
     val deathYear: Int?
 )
 

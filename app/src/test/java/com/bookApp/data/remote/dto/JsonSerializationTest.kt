@@ -1,34 +1,44 @@
 package com.bookApp.data.remote.dto
 
-import com.google.gson.Gson
+import kotlinx.serialization.json.Json
 import org.junit.Assert
 import org.junit.Test
 
 class JsonSerializationTest {
-    private val gson = Gson()
+
+    private val json = Json { ignoreUnknownKeys = true }
 
     @Test
-    fun `test AuthorDto with null birth and death years`() {
-        val jsonWithNullYears = """
-        {
-            "name": "Unknown Author",
-            "birth_year": null,
-            "death_year": null
-        }
+    fun `AuthorDto deserializes with null birth and death years`() {
+        val jsonString = """
+            {
+                "name": "Unknown Author",
+                "birth_year": null,
+                "death_year": null
+            }
         """.trimIndent()
 
-        try {
-            val author = gson.fromJson(jsonWithNullYears, AuthorDto::class.java)
+        val author = json.decodeFromString<AuthorDto>(jsonString)
 
-            Assert.assertNotNull("Author should not be null", author)
-            Assert.assertEquals("Author name should match", "Unknown Author", author.name)
-            Assert.assertNull("Birth year should be null", author.birthYear)
-            Assert.assertNull("Death year should be null", author.deathYear)
+        Assert.assertEquals("Unknown Author", author.name)
+        Assert.assertNull(author.birthYear)
+        Assert.assertNull(author.deathYear)
+    }
 
-            println("✅ Nullable fields handled correctly!")
+    @Test
+    fun `AuthorDto deserializes with present birth and death years`() {
+        val jsonString = """
+            {
+                "name": "Mary Shelley",
+                "birth_year": 1797,
+                "death_year": 1851
+            }
+        """.trimIndent()
 
-        } catch (e: Exception) {
-            Assert.fail("Failed to deserialize AuthorDto with null years: ${e.message}")
-        }
+        val author = json.decodeFromString<AuthorDto>(jsonString)
+
+        Assert.assertEquals("Mary Shelley", author.name)
+        Assert.assertEquals(1797, author.birthYear)
+        Assert.assertEquals(1851, author.deathYear)
     }
 }
