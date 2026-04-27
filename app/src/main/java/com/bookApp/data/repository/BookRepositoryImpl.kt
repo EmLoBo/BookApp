@@ -24,13 +24,8 @@ class BookRepositoryImpl @Inject constructor(
 
     override fun getBookById(id: Int): Flow<Result<Book>> = flow {
         try {
-            val response = api.getBooks()
-            val book = response.results.find { it.id == id }?.toBook()
-            if (book != null) {
-                emit(Result.success(book))
-            } else {
-                emit(Result.failure(Exception("Book not found")))
-            }
+            val book = api.getBooksById(id).toBook()
+            emit(Result.success(book))
         } catch (e: Exception) {
             emit(Result.failure(e))
         }

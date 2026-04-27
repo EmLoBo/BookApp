@@ -10,7 +10,7 @@ fun BookDto.toBook() : Book {
         id = id,
         title = title.trim(),
         authors = authors.map { it.toAuthor() },
-        subjects = subjects.take(1)
+        subjects = subjects
     )
 }
 

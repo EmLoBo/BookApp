@@ -1,5 +1,6 @@
 package com.bookApp.di
 
+import com.bookApp.BuildConfig
 import com.bookApp.data.remote.GutendexApi
 import com.bookApp.domain.repository.BookRepository
 import com.bookApp.data.repository.BookRepositoryImpl
@@ -21,7 +22,11 @@ object AppModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if(BuildConfig.DEBUG){
+                HttpLoggingInterceptor.Level.BODY
+            }else{
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
 
         return OkHttpClient.Builder()

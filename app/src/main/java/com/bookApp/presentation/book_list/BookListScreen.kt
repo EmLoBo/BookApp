@@ -1,3 +1,5 @@
+package com.bookApp.presentation.book_list
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

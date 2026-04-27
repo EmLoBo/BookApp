@@ -1,6 +1,6 @@
 package com.bookApp.presentation.navigation
 
-import BookListScreen
+import com.bookApp.presentation.book_list.BookListScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
