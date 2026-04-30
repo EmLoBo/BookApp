@@ -1,9 +1,10 @@
 package com.bookApp.domain.repository
 
 import com.bookApp.domain.model.Book
+import com.bookApp.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface BookRepository {
-    fun getBooks() : Flow<Result<List<Book>>>
-    fun getBookById(id: Int) : Flow<Result<Book>>
+    suspend fun getBooks(): Resource<List<Book>>
+    suspend fun getBookById(id: Int): Resource<Book>
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,9 +25,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bookApp.domain.model.Book
+import com.bookApp.R
+import com.bookApp.presentation.util.asStringRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,10 +42,13 @@ fun BookDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Book Details") },
+                title = { Text(stringResource(R.string.screen_book_detail_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back)
+                        )
                     }
                 }
             )
@@ -52,23 +59,31 @@ fun BookDetailScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            when (val currentState = state) {
-                is BookDetailState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+            when{
+                state.isLoading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
-                is BookDetailState.Success -> {
-                    BookDetailContent(book = currentState.book)
-                }
-                is BookDetailState.Error -> {
-                    Text(
-                        text = "Error: ${currentState.message}",
+
+                state.error != null -> {
+                    Column(
                         modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.error
-                    )
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(state.error!!.asStringRes()),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(onClick = viewModel::loadBook) {
+                            Text(stringResource(R.string.action_retry))
+                        }
+                    }
+                }
+                state.book != null -> {
+                    BookDetailContent(book = state.book!!)
                 }
             }
+
         }
     }
 }
@@ -90,25 +105,25 @@ fun BookDetailContent(book: Book) {
         Divider()
 
         book.authors.firstOrNull()?.let { author ->
-            DetailRow(label = "Author", value = author.name)
+            DetailRow(label = stringResource(R.string.label_author), value = author.name)
 
             author.birthYear?.let { birthYear ->
                 DetailRow(
-                    label = "Birth Year",
+                    label = stringResource(R.string.label_birth_year),
                     value = birthYear.toString()
                 )
             }
 
             author.deathYear?.let { deathYear ->
                 DetailRow(
-                    label = "Death Year",
+                    label = stringResource(R.string.label_death_year),
                     value = deathYear.toString()
                 )
             }
         }
 
         book.subjects.firstOrNull()?.let { subject ->
-            DetailRow(label = "Subject", value = subject)
+            DetailRow(label = stringResource(R.string.label_subject), value = subject)
         }
     }
 }

@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Book App</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">No internet connection. Check your network and try again.</string>
+    <string name="error_request_timeout">Request timed out. Try again.</string>
+    <string name="error_too_many_requests">Too many requests. Slow down and try again in a moment.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+    <string name="error_serialization">Couldn\'t read the response. Please try again.</string>
+    <string name="error_unknown">Something went wrong. Please try again.</string>
+    <string name="error_book_not_found">This book is no longer available.</string>
+
+    <!-- Actions -->
+    <string name="action_retry">Retry</string>
+    <string name="action_back">Back</string>
+
+    <!-- Screens -->
+    <string name="screen_books_title">Books</string>
+    <string name="screen_book_detail_title">Book Details</string>
+
+    <!-- Detail labels -->
+    <string name="label_author">Author</string>
+    <string name="label_birth_year">Birth Year</string>
+    <string name="label_death_year">Death Year</string>
+    <string name="label_subject">Subject</string>
 </resources>

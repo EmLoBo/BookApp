@@ -2,32 +2,31 @@ package com.bookApp.data.repository
 
 import com.bookApp.data.mapper.toBook
 import com.bookApp.data.remote.GutendexApi
+import com.bookApp.data.util.toDataError
 import com.bookApp.domain.model.Book
 import com.bookApp.domain.repository.BookRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.bookApp.domain.util.Resource
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(
     private val api: GutendexApi
-): BookRepository {
+) : BookRepository {
 
-    override fun getBooks(): Flow<Result<List<Book>>> = flow {
-        try {
-            val response = api.getBooks()
-            val books = response.results.map { it.toBook() }
-            emit(Result.success(books))
+    override suspend fun getBooks(): Resource<List<Book>> {
+        return try {
+            val books = api.getBooks().results.map { it.toBook() }
+            Resource.Success(books)
         } catch (e: Exception) {
-            emit(Result.failure(e))
+            Resource.Error(e.toDataError())
         }
     }
 
-    override fun getBookById(id: Int): Flow<Result<Book>> = flow {
-        try {
+    override suspend fun getBookById(id: Int): Resource<Book> {
+        return try {
             val book = api.getBooksById(id).toBook()
-            emit(Result.success(book))
+            Resource.Success(book)
         } catch (e: Exception) {
-            emit(Result.failure(e))
+            Resource.Error(e.toDataError())
         }
     }
 }
